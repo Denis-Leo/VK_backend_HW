@@ -5,8 +5,7 @@ class TicTacGame:
     '''Игра в крестики- нолики
         первым ходит кт остаит крестик   '''
     def __init__(self):
-#       self.board = [[0,0,0],[0,0,0][0,0,0]]   
-        self.board = [[' ',' ',' '],[' ',' ',' '],[' ',' ',' ']]   
+        self.board = [[' ',' ',' '],[' ',' ',' '],[' ',' ',' ']]
         self.step = 0
         
 
@@ -23,13 +22,15 @@ class TicTacGame:
         print(board_pattern)
         
     def instruction_game(self):
-        print(''' Вас приветсвует игра Крестики-нолики!
-        Выберите режим игры:
-        1 - два человека 
-        2 - человек крестик и компьютер
-        3 - компьютер и человек нолик
-        4 - два компьютера
-        ''')
+        print(' Вас приветсвует игра Крестики-нолики!')
+
+        # text_add = '''
+        # Выберите режим игры:
+        # 1 - два человека 
+        # 2 - человек крестик и компьютер
+        # 3 - компьютер и человек нолик
+        # 4 - два компьютера
+        # '''
 
         print(''' Все ячейки поля пронумерованы и имеют две координаты:
 
@@ -89,8 +90,8 @@ class TicTacGame:
     def start_game(self):
         self.instruction_game()
 
-        while self.check_winner() == None:
-            if self.step % 2 == 1:
+        while self.check_winner() is None:
+            if self.step % 2 == 0:
                 input_text = input('\n Поставить крестик в позицию:')
             else:
                 input_text = input('\n Поставить нолик в позицию:')
@@ -99,26 +100,23 @@ class TicTacGame:
 
                 x,y = input_text.split()
                 x,y = int(x)-1,int(y)-1
-                print(x,y)
+                # print(x,y)
 
-                if self.step % 2 == 1:
+                if self.step % 2 == 0:
                     self.board[x][y] = 'x'
                 else:
                     self.board[x][y] = 'o'
                 self.show_board()
                 self.step += 1
-        winner = self.check_winner()
-        if winner == 'x': print('Победил игрок крестик')
-        if winner == 'o': print('Победил игрок нолик')   
-        if winner == '-': print('Игра закончилась в ничью')
+        self.winner_print()
 
     def check_winner(self):
         troika_list = []
         for i in self.board:
-            print(''.join(i))
+            # print(''.join(i))
             troika_list.append(''.join(i))
         for i in np.transpose(self.board):
-            print(''.join(i))
+            # print(''.join(i))
             troika_list.append(''.join(i))
         troika_list.append(self.board[0][0] +self.board[1][1]+self.board[2][2] )
         troika_list.append(self.board[0][2] +self.board[1][1]+self.board[2][0] )
@@ -127,13 +125,25 @@ class TicTacGame:
             if i[0]!= ' ' and i[0]*3 == i:
                 return i[0]
 
-        if self.step >=9:
+        if self.step >= 9:
             return '-'
         return None
+    def winner_print(self):
+        winner = self.check_winner()
+        # print('''****************************************************************** 
+# ******************************************************************''')
+
+        print('''********* ********************* *********
+********* ********************* *********''')
+        if winner == 'x': print('         Победил игрок крестик')
+        if winner == 'o': print('          Победил игрок нолик')   
+        if winner == '-': print('        Игра закончилась в ничью')
+        print('''********* ********************* *********
+********* ********************* *********\n''')
 
 if __name__ == '__main__':
-	game = TicTacGame()
-	game.start_game()
+    game = TicTacGame()
+    game.start_game()
 
 
 #
